@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import TemplateView, ListView, DetailView, View
 from django.views.generic.edit import CreateView, UpdateView
 from timer.models import Profile, Child, Stay
+from django.core.urlresolvers import reverse, reverse_lazy
 
 
 class IndexView(TemplateView):
@@ -18,9 +19,16 @@ class GARBAGEView(View):
     def post(self, request):
         # #####
         print(request.POST)
+        x = request.POST['code']
+        target = Child.objects.get(code=x)
+
 
         # #####
-        return HttpResponseRedirect("/")
+        return HttpResponseRedirect("http://localhost:8000/child/{}/".format(target.id))
+
+class NEWView(View):
+    template_name = 'new_view.html'
+
 
 class UserCreateView(CreateView):
     model = User
@@ -42,11 +50,13 @@ class ChildDetailView(DetailView):
     model = Child
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        return context
 
 
 class StayCreateView(CreateView):
     model = Stay
     success_url = "/"
+    fields = ("active", )
 
 
     def form_valid(self, form):
