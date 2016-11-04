@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<a href="{% url 'child_create_view' %}">Add Child</a>
+<h2>Active</h2>
+{% for stay in active %}
+{{ stay.child }}, {{ stay.in_time }}
+{% endfor %}
+
+<h2>Children List</h2>
+{% for child in kids %}
+{{ child }} {{ child.code }}
+{% endfor %}
+
+
+
+{% endblock %}

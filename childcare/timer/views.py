@@ -9,14 +9,13 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime, timedelta, timezone
 from django.utils import timezone
+import random
 
 
 
 class IndexView(TemplateView):
     model = Profile
     template_name = "index.html"
-
-
 
 class GARBAGEView(View):
 
@@ -53,9 +52,6 @@ class ProfileView(TemplateView):
         #     print(x.id)
         for child in kids:
             find.append(child.stay_set.all())
-
-
-
         context['find'] = find
         context['kids'] = kids
         context['active'] = active_parent
@@ -105,4 +101,33 @@ class StayUpdateView(UpdateView):
         return super().form_valid(form)
 
 class FacultyView(TemplateView):
-    template = "faculty.html"
+    model = Profile
+    template_name = "faculty.html"
+
+    def get_context_data(self):
+        context = super().get_context_data()
+        profiles = Profile.objects.filter(profile_type="p")
+        kids = Child.objects.all()
+        active = Stay.objects.filter(active=True)
+        context['profiles'] = profiles
+        context['kids'] = kids
+        context['active'] = active
+        return context
+
+class ChildCreateView(CreateView):
+    model = Child
+    success_url = "/"
+    fields = ('first_name', 'last_name', 'parent')
+
+
+    def coder(self):
+        x = []
+        for step in range(4):
+            x.append(str(random.randint(0,9)))
+        return int("".join(x))
+
+
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.code = self.coder()
+        return super().form_valid(form)
