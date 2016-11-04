@@ -4,6 +4,15 @@
 {{ active }}
 
 {% for x in kids %}
-<a href="{% url 'child_detail_view' x.id %}">{{ x }}</a>
+{{ x }}
+{% endfor %}
+<hr>
+
+{% for x in find %}
+{% for stay in x %}
+{{ stay.child }}<br>
+{{ stay.day }}
+{{ stay.str_dif }}<hr>
+{% endfor %}
 {% endfor %}
 {% endblock %}

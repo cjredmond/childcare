@@ -46,6 +46,17 @@ class ProfileView(TemplateView):
         context = super().get_context_data()
         active_parent = Profile.objects.get(user=self.request.user)
         kids = Child.objects.filter(parent=active_parent)
+        find = []
+        # for kid in kids:
+        #     find.append(Stay.objects.filter(child=kid))
+        # for x in find[0]:
+        #     print(x.id)
+        for child in kids:
+            find.append(child.stay_set.all())
+
+
+
+        context['find'] = find
         context['kids'] = kids
         context['active'] = active_parent
         return context
@@ -65,9 +76,6 @@ class ChildDetailView(DetailView):
             context['active'] = False
         try:
             old = stays.filter(active=False)
-            print(dir(old))
-            for x in old:
-                print(x.in_time)
             context['old'] = old
         except ObjectDoesNotExist:
             pass
@@ -88,10 +96,13 @@ class StayCreateView(CreateView):
 class StayUpdateView(UpdateView):
     model = Stay
     success_url = "/"
-    fields = ('notes',)
+    fields = []
 
     def form_valid(self, form):
         instance = form.save(commit=False)
         instance.active = False
         instance.out_time = datetime.now
         return super().form_valid(form)
+
+class FacultyView(TemplateView):
+    template = "faculty.html"

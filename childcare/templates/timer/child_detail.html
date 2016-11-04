@@ -3,17 +3,29 @@
 
 {{ child }}
 {% if active %}
-<a href="{% url 'stay_update_view' current.id %}">Pick Up</a>
+<form class="" action="{% url 'stay_update_view' current.id %}" method="post">
+  {% csrf_token %}
+  <input type="submit" name="" value="PICK UP" class="btn btn-success btn-md">
+</form>
+
 
 {% else %}
-<a href="{% url 'stay_create_view' child.id %}">Drop Off</a>
+<form class="" action="{% url 'stay_create_view' child.id %}" method="post">
+  {% csrf_token %}
+  <input type="text" name="notes" value="">
+  <input type="submit" name="" value="DROP OFF" class="btn btn-success btn-md">
+</form>
+
 {% endif %}
 
 <hr>
-{{ old }}<br>
+<br>
 
 
 {% for stay in old %}
+id {{ stay.id }}<br>
+child {{ stay.child }}<br>
+parent {{ stay.child.parent }}<br>
 in {{ stay.in_time }}<br>
 out {{ stay.out_time }}<br>
 time {{ stay.time_dif }}<br>
