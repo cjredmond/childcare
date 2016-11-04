@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from timer.models import Profile, Child, Stay
+
+
+admin.site.register(Profile)
+admin.site.register(Child)
+admin.site.register(Stay)

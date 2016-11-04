@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form class="" action="{% url 'stay_create_view' 1 %}" method="post">
+  {% csrf_token %}
+  {{ form }}
+  <input type="button" value="submit">
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form class="" action="/GARBAGE/" method="post">
+  {% csrf_token %}
+  <input type="text" name="code" value="">
+  <input type="submit"  value="submit">
+</form>
+
+{{ number }}
+
+{% endblock %}

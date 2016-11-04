@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{{ active }}
+
+{% for x in kids %}
+<a href="{% url 'child_detail_view' x.id %}">{{ x }}</a>
+{% endfor %}
+{% endblock %}
