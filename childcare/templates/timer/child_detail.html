@@ -2,7 +2,26 @@
 {% block content %}
 
 {{ child }}
+{% if active %}
+<a href="{% url 'stay_update_view' current.id %}">Pick Up</a>
 
-<a href="{% url 'stay_create_view' child.id %}">ssfasf</a>
+{% else %}
+<a href="{% url 'stay_create_view' child.id %}">Drop Off</a>
+{% endif %}
+
+<hr>
+{{ old }}<br>
+
+
+{% for stay in old %}
+in {{ stay.in_time }}<br>
+out {{ stay.out_time }}<br>
+time {{ stay.time_dif }}<br>
+<br>
+
+{% endfor %}
+
+
+
 
 {% endblock %}

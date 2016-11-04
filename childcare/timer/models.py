@@ -33,3 +33,8 @@ class Stay(models.Model):
     in_time = models.DateTimeField(auto_now_add=True)
     out_time = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
+    notes = models.TextField(null=True)
+
+    @property
+    def time_dif(self):
+        return self.out_time - self.in_time

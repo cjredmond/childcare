@@ -6,6 +6,10 @@ from django.views.generic import TemplateView, ListView, DetailView, View
 from django.views.generic.edit import CreateView, UpdateView
 from timer.models import Profile, Child, Stay
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.core.exceptions import ObjectDoesNotExist
+from datetime import datetime, timedelta, timezone
+from django.utils import timezone
+
 
 
 class IndexView(TemplateView):
@@ -50,16 +54,44 @@ class ChildDetailView(DetailView):
     model = Child
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        child = Child.objects.get(id=self.kwargs['pk'])
+        stays = Stay.objects.filter(child=child.id)
+        try:
+            active = stays.get(active=True)
+            if active:
+                context['current'] = active
+                context['active'] = True
+        except ObjectDoesNotExist:
+            context['active'] = False
+        try:
+            old = stays.filter(active=False)
+            print(dir(old))
+            for x in old:
+                print(x.in_time)
+            context['old'] = old
+        except ObjectDoesNotExist:
+            pass
+
         return context
 
 
 class StayCreateView(CreateView):
     model = Stay
     success_url = "/"
-    fields = ("active", )
-
+    fields = ("notes", )
 
     def form_valid(self, form):
         instance = form.save(commit=False)
         instance.child = Child.objects.get(id=self.kwargs['pk'])
+        return super().form_valid(form)
+
+class StayUpdateView(UpdateView):
+    model = Stay
+    success_url = "/"
+    fields = ('notes',)
+
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.active = False
+        instance.out_time = datetime.now
         return super().form_valid(form)

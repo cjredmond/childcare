@@ -3,7 +3,7 @@ from django.conf.urls import url, include
 
 from django.contrib import admin
 from timer.views import IndexView, UserCreateView, ProfileView, ChildDetailView, StayCreateView, \
-                        GARBAGEView, NEWView
+                        GARBAGEView, NEWView, StayUpdateView
 
 
 urlpatterns = [
@@ -15,5 +15,6 @@ urlpatterns = [
     url(r'^accounts/profile/$', ProfileView.as_view(), name="profile_view"),
     url(r'^create_user/$', UserCreateView.as_view(), name="user_create_view"),
     url(r'^child/(?P<pk>\d+)/stay/$', StayCreateView.as_view(), name="stay_create_view"),
+    url(r'^child/(?P<pk>\d+)/stay/update/$', StayUpdateView.as_view(), name="stay_update_view"),
     url(r'^child/(?P<pk>\d+)/$', ChildDetailView.as_view(), name="child_detail_view"),
 ]
