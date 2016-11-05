@@ -2,8 +2,9 @@ from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
+from datetime import datetime, timedelta, timezone
 
-PROFILE_TYPE = [('p', 'parent'), ('f', 'faculty'), ('o', 'owner')]
+PROFILE_TYPE = [('p', 'parent'), ('f', 'faculty')]
 class Profile(models.Model):
     user = models.OneToOneField('auth.User')
     profile_type = models.CharField(max_length=1, choices=PROFILE_TYPE)
@@ -27,6 +28,16 @@ class Child(models.Model):
 
     def __str__(self):
         return self.first_name + " " + self.last_name
+    @property
+    def total_time(self):
+        stays = self.stay_set.all()
+        x = []
+        for stay in stays:
+            #if stay.active == True:
+                #x.append(datetime.now() - stay.in_time)
+            x.append(stay.str_dif())
+
+        return round(sum(x),3)
 
 class Stay(models.Model):
     child = models.ForeignKey(Child)
@@ -39,9 +50,9 @@ class Stay(models.Model):
     def time_dif(self):
         return self.out_time - self.in_time
 
-    @property
     def day(self):
         return self.in_time.strftime('%a, %b %d')
+
     def str_dif(self):
         seconds = self.time_dif.total_seconds()
         hours = seconds/3600

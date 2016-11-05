@@ -10,6 +10,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime, timedelta, timezone
 from django.utils import timezone
 import random
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
@@ -18,20 +20,17 @@ class IndexView(TemplateView):
     template_name = "index.html"
 
 class GARBAGEView(View):
-
     def post(self, request):
-        # #####
-        print(request.POST)
         x = request.POST['code']
-        target = Child.objects.get(code=x)
-
-
-        # #####
+        y = str(x)
+        for char in y:
+            if char.isalpha():
+                return HttpResponseRedirect("http://localhost:8000/")
+        try:
+            target = Child.objects.get(code=x)
+        except ObjectDoesNotExist:
+            return HttpResponseRedirect("http://localhost:8000/")
         return HttpResponseRedirect("http://localhost:8000/child/{}/".format(target.id))
-
-class NEWView(View):
-    template_name = 'new_view.html'
-
 
 class UserCreateView(CreateView):
     model = User
@@ -50,12 +49,15 @@ class ProfileView(TemplateView):
         #     find.append(Stay.objects.filter(child=kid))
         # for x in find[0]:
         #     print(x.id)
+
         for child in kids:
             find.append(child.stay_set.all())
+
         context['find'] = find
         context['kids'] = kids
         context['active'] = active_parent
         return context
+
 
 class ChildDetailView(DetailView):
     model = Child
@@ -100,7 +102,7 @@ class StayUpdateView(UpdateView):
         instance.out_time = datetime.now
         return super().form_valid(form)
 
-class FacultyView(TemplateView):
+class FacultyView(LoginRequiredMixin, TemplateView):
     model = Profile
     template_name = "faculty.html"
 
@@ -119,13 +121,11 @@ class ChildCreateView(CreateView):
     success_url = "/"
     fields = ('first_name', 'last_name', 'parent')
 
-
     def coder(self):
         x = []
         for step in range(4):
             x.append(str(random.randint(0,9)))
         return int("".join(x))
-
 
     def form_valid(self, form):
         instance = form.save(commit=False)

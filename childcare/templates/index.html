@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-
+<h2>Input ID Code</h2>
 <form class="" action="/GARBAGE/" method="post">
   {% csrf_token %}
-  <input type="text" name="code" value="">
-  <input type="submit"  value="submit">
+  <input type="text" name="code" maxlength="4" autocomplete="off" value="" class="form-control input-lg codebox">
+  <input type="submit"  value="submit" class="btn btn-success btn-lg">
 </form>
 
 {{ number }}

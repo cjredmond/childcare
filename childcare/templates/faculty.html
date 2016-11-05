@@ -1,15 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
+{% if request.user.profile.profile_type == "f" %}
 <a href="{% url 'child_create_view' %}">Add Child</a>
 <h2>Active</h2>
 {% for stay in active %}
-{{ stay.child }}, {{ stay.in_time }}
+{{ stay.child }}, Checked in: {{ stay.in_time }}
 {% endfor %}
 
 <h2>Children List</h2>
 {% for child in kids %}
-{{ child }} {{ child.code }}
+{{ child }} {{ child.code }}<br>
+Total Hours: {{ child.total_time }}
+<hr>
+<br>
 {% endfor %}
+{% endif %}
 
 
 
