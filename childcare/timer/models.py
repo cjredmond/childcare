@@ -59,4 +59,4 @@ class Stay(models.Model):
     def str_dif(self):
         seconds = self.time_dif.total_seconds()
         hours = seconds/3600
-        return round(hours, 3)
+        return round(hours, 2)

@@ -21,10 +21,13 @@
 <hr>
 <br>
 {% for stay in old %}
-Drop Off: {{ stay.in_time }}<br>
-Pick Up: {{ stay.out_time }}<br>
-Time: {{ stay.str_dif }} hours<br>
-<br>
+<div class="panel childdetail panel-default">
+  Drop Off: {{ stay.in_time }}<br>
+  Pick Up: {{ stay.out_time }}<br>
+  Time: {{ stay.str_dif }} hours<br>
+</div>
+
+
 
 {% endfor %}
 

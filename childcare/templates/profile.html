@@ -14,27 +14,42 @@
 <div class="row">
   <div class="col-md-5">
     <div class="row kidslist">
-      <h3>Children Pages</h3>
-      {% for x in kids %}
-      <a href="{% url 'child_detail_view' x.id x.code %}">{{ x }}</a><br>
-      {% endfor %}
+      <div class="panel panel-default">
+        <div class="panel panel-header">
+          <h3>Children Pages</h3>
+        </div>
+          <div class="panel panel-body">
+            {% for x in kids %}
+            <a href="{% url 'child_detail_view' x.id x.code %}">{{ x }}</a><br>
+            {% endfor %}
+          </div>
+      </div>
     </div>
     <div class="row">
-      <h3>Total Hours/Minutes Booked</h3>
-      <h4>{{ total }}:{{ minutes }}</h4>
+      <div class="panel panel-default">
+        <div class="panel panel-header">
+          <h3>Total Hours/Minutes Booked</h3></div>
+          <div class="panel panel-body">
+            <h3>{{ total }}:{{ minutes }}</h3>
+        </div>
+      </div>
     </div>
 
   </div>
-  <div class="col-md-7">
-    <h3>Recent Stays</h3>
-    {% for x in find %}
-    {% for stay in x %}
-    {{ stay.child }}<br>
-    {{ stay.day }}
-    {{ stay.str_dif }} hours<hr>
-    {% endfor %}
-    {% endfor %}
-
+  <div class="col-md-1"></div>
+  <div class="col-md-6">
+    <div class="panel panel-success">
+      <div class="panel panel-header">
+        <h3>Recent Stays</h3>
+      </div>
+      <div class="panel panel-body">
+        {% for x in find %}
+        {% for stay in x %}
+        {{ stay.child }}, {{ stay.day }}  -  {{ stay.str_dif }} hours <br>
+        {% endfor %}
+        {% endfor %}
+      </div>
+    </div>
   </div>
 
 </div>

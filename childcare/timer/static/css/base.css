@@ -59,5 +59,14 @@
 .kidslist {
   height: 40vh;
   font-size: 20px;
-  background-color: #e6ffff;
+}
+
+.panel {
+    background-color: #e6ffff;
+    text-align: center;
+}
+
+.childdetail {
+  text-align: left!important;
+  width: 400px!important;
 }
