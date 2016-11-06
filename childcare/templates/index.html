@@ -1,12 +1,51 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Input ID Code</h2>
-<form class="" action="/GARBAGE/" method="post">
-  {% csrf_token %}
-  <input type="text" name="code" maxlength="4" autocomplete="off" value="" class="form-control input-lg codebox">
-  <input type="submit"  value="submit" class="btn btn-success btn-lg">
-</form>
 
-{{ number }}
+
+<div class="row backindex">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="nav navbar-nav">
+        <li><a href="{% url 'login' %}">Login</a></li>
+        <li><a href="{% url 'user_create_view' %}">Create User</a></li>
+        <li><a href="{% url 'faculty_view' %}">Faculty</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+        <li><a href="{% url 'profile_view' %}">Profile</a></li>
+      </div>
+    </div>
+  </nav>
+  <div class="col-md-4 side">  </div>
+  <div class="col-md-4">
+    <div class="row"><div class="row blank"></div>
+    <div class="wrappin">
+    <div class="pin">
+      <div class="inpin">
+    <div class="row">
+      <h1>Input PIN Number</h1>
+    </div>
+  <form class="" action="/GARBAGE/" method="post">
+    {% csrf_token %}
+    <input type="text" name="code" maxlength="4" autocomplete="off" value="" class="form-control input-lg codebox">
+<div class="row"><br>
+    <input type="submit"  value="submit" class="btn btn-success btn-lg">
+        </form>
+        </div>
+</div>
+  </div>
+    </div>
+</div>
+</div>
+<div class="col-md-4 side">
+
+</div>
+</div>
+
+
+
+
+
+
+
+
 
 {% endblock %}

@@ -1,4 +1,63 @@
 .codebox {
-  font-size: 40px;
-  width: 140px;
+  font-size: 60px;
+  width: 300px;
+  height: 100px;
+  border-left: 20px;
+}
+
+.blank {
+  height: 30vh;
+}
+.btn-lg {
+  height: 100px;
+  width: 300px;
+}
+
+.pin label {
+  display: inline-block;
+  float: left;
+  font-size: 30px;
+  border-right: 5px;
+}
+
+.side {
+  height: 100vh;
+}
+
+.pin {
+  text-align: center;
+  background-color: lightgrey;
+  border: 15px solid black;
+}
+
+.pin input[type="text"] {
+            position: relative;
+            display: block;
+            margin : 0 auto;
+       }
+.wrappin {
+  border: 3px solid white;
+}
+
+.inpin {
+  border: 3px solid white;
+}
+.backindex {
+  background-color: darkgrey;
+}
+
+.loginback {
+  background-color: darkblue;
+  color: white;
+}
+.loginback input {
+  height: 50px;
+  width: 200px;
+  font-size: 24px;
+}
+
+.kidslist {
+  height: 40vh;
+  font-size: 20px;
+  background-color: #e6ffff;
 }

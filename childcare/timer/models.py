@@ -53,6 +53,9 @@ class Stay(models.Model):
     def day(self):
         return self.in_time.strftime('%a, %b %d')
 
+    # def str_in(self):
+    #     return self.in_time.strftime('%')
+
     def str_dif(self):
         seconds = self.time_dif.total_seconds()
         hours = seconds/3600

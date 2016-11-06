@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import TemplateView, ListView, DetailView, View
@@ -10,10 +10,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime, timedelta, timezone
 from django.utils import timezone
 import random
-from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-
+from django.core.exceptions import PermissionDenied
 
 class IndexView(TemplateView):
     model = Profile
@@ -30,7 +28,7 @@ class GARBAGEView(View):
             target = Child.objects.get(code=x)
         except ObjectDoesNotExist:
             return HttpResponseRedirect("http://localhost:8000/")
-        return HttpResponseRedirect("http://localhost:8000/child/{}/".format(target.id))
+        return HttpResponseRedirect("http://localhost:8000/child/{}/{}".format(target.id, x))
 
 class UserCreateView(CreateView):
     model = User
@@ -45,25 +43,32 @@ class ProfileView(TemplateView):
         active_parent = Profile.objects.get(user=self.request.user)
         kids = Child.objects.filter(parent=active_parent)
         find = []
-        # for kid in kids:
-        #     find.append(Stay.objects.filter(child=kid))
-        # for x in find[0]:
-        #     print(x.id)
-
         for child in kids:
             find.append(child.stay_set.all())
-
+        total = 0
+        for kid in find:
+            for stay in kid:
+                total += float(stay.str_dif())
+        total_floor = int(total)
+        minutes = int((total - total_floor) * 60)
+        context['minutes'] = minutes
+        context['total'] = total_floor
         context['find'] = find
         context['kids'] = kids
         context['active'] = active_parent
         return context
 
-
 class ChildDetailView(DetailView):
     model = Child
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         child = Child.objects.get(id=self.kwargs['pk'])
+        code = int(self.kwargs['sk'])
+        if code != child.code:
+            raise PermissionDenied
+
+
         stays = Stay.objects.filter(child=child.id)
         try:
             active = stays.get(active=True)

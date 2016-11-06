@@ -16,6 +16,6 @@ urlpatterns = [
     url(r'^create/child/$', ChildCreateView.as_view(), name="child_create_view"),
     url(r'^child/(?P<pk>\d+)/stay/$', StayCreateView.as_view(), name="stay_create_view"),
     url(r'^child/(?P<pk>\d+)/stay/update/$', StayUpdateView.as_view(), name="stay_update_view"),
-    url(r'^child/(?P<pk>\d+)/$', ChildDetailView.as_view(), name="child_detail_view"),
+    url(r'^child/(?P<pk>\d+)/(?P<sk>\d+)$', ChildDetailView.as_view(), name="child_detail_view"),
     url(r'^faculty/$', FacultyView.as_view(), name="faculty_view"),
 ]

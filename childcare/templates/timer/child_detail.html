@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
 
-{{ child }}
+<h3>{{ child }}</h3>
+{% if not request.user.is_authenticated %}
 {% if active %}
 <form class="" action="{% url 'stay_update_view' current.id %}" method="post">
   {% csrf_token %}
   <input type="submit" name="" value="PICK UP" class="btn btn-success btn-md">
 </form>
-
 
 {% else %}
 <form class="" action="{% url 'stay_create_view' child.id %}" method="post">
@@ -15,20 +15,15 @@
   <input type="text" name="notes" value="">
   <input type="submit" name="" value="DROP OFF" class="btn btn-success btn-md">
 </form>
-
+{% endif %}
 {% endif %}
 
 <hr>
 <br>
-
-
 {% for stay in old %}
-id {{ stay.id }}<br>
-child {{ stay.child }}<br>
-parent {{ stay.child.parent }}<br>
-in {{ stay.in_time }}<br>
-out {{ stay.out_time }}<br>
-time {{ stay.str_dif }} hours<br>
+Drop Off: {{ stay.in_time }}<br>
+Pick Up: {{ stay.out_time }}<br>
+Time: {{ stay.str_dif }} hours<br>
 <br>
 
 {% endfor %}
