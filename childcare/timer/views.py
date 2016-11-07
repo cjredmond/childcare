@@ -78,7 +78,7 @@ class ChildDetailView(DetailView):
         except ObjectDoesNotExist:
             context['active'] = False
         try:
-            old = stays.filter(active=False)
+            old = stays.filter(active=False).order_by('-in_time')[:5]
             context['old'] = old
         except ObjectDoesNotExist:
             pass
@@ -123,7 +123,8 @@ class FacultyView(LoginRequiredMixin, TemplateView):
 
 class ChildCreateView(CreateView):
     model = Child
-    success_url = "/"
+    def get_success_url(self):
+        return reverse('faculty_view')
     fields = ('first_name', 'last_name', 'parent')
 
     def coder(self):

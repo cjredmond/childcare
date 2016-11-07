@@ -1,21 +1,48 @@
 {% extends 'base.html' %}
 {% block content %}
 {% if request.user.profile.profile_type == "f" %}
-<a href="{% url 'child_create_view' %}">Add Child</a>
-<h2>Active</h2>
-{% for stay in active %}
-{{ stay.child }}, Checked in: {{ stay.in_time }}
-{% endfor %}
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="nav navbar-nav">
+      <li><a href="{% url 'logout' %}">Logout</a></li>
+      <li><a href="{% url 'profile_view' %}">Profile</a></li>
+    </div>
+  </div>
+</nav>
 
-<h2>Children List</h2>
-{% for child in kids %}
-{{ child }} {{ child.code }}<br>
-Total Hours: {{ child.total_time }}
-<hr>
-<br>
-{% endfor %}
-{% endif %}
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-5">
+    <div class="row addchild">
+          <a href="{% url 'child_create_view' %}">Add Child</a>
+    </div>
+    <div class="row blank-faculty">  </div>
+    <div class="row addchild">
+      <a href="{% url 'user_create_view' %}">Add Parent</a>
+    </div>
+    <div class="row blank-faculty"></div>
+    <div class="row  active-faculty">
+            <h2>On Site</h2>
+      {% for stay in active %}
+      {{ stay.child }}, Checked in: {{ stay.in_time }}
+      {% endfor %}
 
+  </div>
+</div>
+<div class="col-md-1"></div>
+  <div class="col-md-5 children-list">
+    <h2>Children List</h2>
+    {% for child in kids %}
+    <a href="{% url 'child_detail_view' child.id child.code %}">{{ child }} </a>
+    {{ child.code }}<br>
+    Total Hours: {{ child.total_time }}
+    <br><br>
+    {% endfor %}
+    {% endif %}
+
+
+  </div>
+</div>
 
 
 {% endblock %}

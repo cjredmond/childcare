@@ -3,11 +3,10 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="nav navbar-nav">
-      <li><a href="{% url 'login' %}">Login</a></li>
-      <li><a href="{% url 'user_create_view' %}">Create User</a></li>
-      <li><a href="{% url 'faculty_view' %}">Faculty</a></li>
       <li><a href="{% url 'logout' %}">Logout</a></li>
-      <li><a href="{% url 'profile_view' %}">Profile</a></li>
+      {% if request.user.profile.profile_type == "f" %}
+      <li><a href="{% url 'faculty_view' %}">Faculty</a></li>
+      {% endif %}
     </div>
   </div>
 </nav>

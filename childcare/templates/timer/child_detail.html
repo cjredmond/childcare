@@ -1,37 +1,61 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h3>{{ child }}</h3>
+
+
 {% if not request.user.is_authenticated %}
+<div class="button-box">
+  <h2>{{ child }}</h2>
 {% if active %}
 <form class="" action="{% url 'stay_update_view' current.id %}" method="post">
   {% csrf_token %}
-  <input type="submit" name="" value="PICK UP" class="btn btn-success btn-md">
+  <input type="submit" name="" value="PICK UP" class="btn btn-success btn-lg">
 </form>
 
 {% else %}
 <form class="" action="{% url 'stay_create_view' child.id %}" method="post">
   {% csrf_token %}
-  <input type="text" name="notes" value="">
-  <input type="submit" name="" value="DROP OFF" class="btn btn-success btn-md">
+
+  <input type="submit" name="" value="DROP OFF" class="btn btn-success btn-lg">
+  <br><br>
+
+  Notes: <input type="text" name="notes" value="" class="input-lg notes">
 </form>
 {% endif %}
 {% endif %}
+</div>
 
-<hr>
-<br>
+  {% if request.user.is_authenticated %}
+  <div class="moveright">
+  <h3>{{ child }}</h3>
+  <a href="{% url 'profile_view' %}">Back to Profile</a>
+    </div>
 {% for stay in old %}
-<div class="panel childdetail panel-default">
-  Drop Off: {{ stay.in_time }}<br>
-  Pick Up: {{ stay.out_time }}<br>
-  Time: {{ stay.str_dif }} hours<br>
+<div class="container">
+
+
+<div class="panel childdetail panel-success">
+  <div class="panel panel-header">
+{{ stay.day }}
+  </div>
+  <div class="row">
+    <div class="col-md-4 bold">
+      <div class="container">
+      Drop Off: <br>
+      Pick Up: <br>
+      Hours: <br>
+      </div>
+    </div>
+    <div class="col-md-8">
+      {{ stay.str_in }}<br>
+      {{ stay.str_out }}<br>
+      {{ stay.str_dif }}<br>
+    </div>
+</div>
+  </div>
 </div>
 
 
-
 {% endfor %}
-
-
-
-
+{% endif %}
 {% endblock %}

@@ -69,4 +69,49 @@
 .childdetail {
   text-align: left!important;
   width: 400px!important;
+  font-size: 24px;
+}
+
+.bold {
+  font-weight: 200;
+}
+
+.button-box {
+  height: 70vh;
+  background-color: lightgrey;
+  padding-top: 10vh;
+  text-align: center;
+}
+.moveright {
+  padding-left: 140px;
+}
+.addchild {
+  height: 20vh;
+  font-size: 36px;
+  padding-top: 20px;
+  border: 3px solid #99ffff;
+  text-align: center;
+  background-color: #ccffff;
+}
+
+.active-faculty {
+  height: 40vh;
+  border: 3px solid #99ffff;
+  text-align: center;
+  background-color: #ccffff;
+}
+
+.blank-faculty {
+  height: 10vh;
+}
+
+.children-list {
+  border: 3px solid #99ffff;
+  text-align: left;
+  background-color: #ccffff;
+  font-size: 16px;
+}
+
+.children-list h2 {
+  text-align: center;
 }
