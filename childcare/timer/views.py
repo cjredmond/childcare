@@ -78,7 +78,7 @@ class ChildDetailView(DetailView):
         except ObjectDoesNotExist:
             context['active'] = False
         try:
-            old = stays.filter(active=False).order_by('-in_time')[:5]
+            old = stays.filter(active=False).order_by('-in_time')
             context['old'] = old
         except ObjectDoesNotExist:
             pass
