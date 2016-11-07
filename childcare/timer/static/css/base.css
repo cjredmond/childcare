@@ -28,6 +28,7 @@
   text-align: center;
   background-color: lightgrey;
   border: 15px solid black;
+  border-radius: 20px;
 }
 
 .pin input[type="text"] {
@@ -37,10 +38,12 @@
        }
 .wrappin {
   border: 3px solid white;
+  border-radius: 20px;
 }
 
 .inpin {
   border: 3px solid white;
+  border-radius: 1px;
 }
 .backindex {
   background-color: darkgrey;

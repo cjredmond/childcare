@@ -8,7 +8,6 @@
       <div class="nav navbar-nav">
         {% if not request.user.is_authenticated %}
         <li><a href="{% url 'login' %}">Login</a></li>
-        <li><a href="{% url 'user_create_view' %}">Create User</a></li>
         {% elif request.user.profile.profile_type == "p" %}
         <li><a href="{% url 'logout' %}">Logout</a></li>
         <li><a href="{% url 'profile_view' %}">Profile</a></li>
